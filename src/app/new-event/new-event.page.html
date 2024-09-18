@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-title>Event Maker</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Event Maker </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,17 +26,7 @@
 <ion-content id="nav-content" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Evénements</ion-title>
+      <ion-title size="large">Nouvel événement</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ng-container *ngFor="let evt of events">
-    <ion-card>
-      <img alt="Image événement" src="{{evt.urlPhoto}}" />
-      <ion-card-header>
-        <ion-card-title>{{evt.nameEvent}}</ion-card-title>
-        <ion-card-subtitle>{{evt.cityEvent}}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>{{evt.descriptionEvent}}</ion-card-content>
-    </ion-card>
-  </ng-container>
 </ion-content>
