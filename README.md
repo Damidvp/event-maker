@@ -1,4 +1,4 @@
-### Event Maker
+# Event Maker
 
 Cette application permet de proposer des événements et d'être notifié lorsqu'un événement débute.
 
