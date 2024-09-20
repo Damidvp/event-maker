@@ -10,9 +10,10 @@ import { Component, inject } from '@angular/core';
 export class HomePage {
   private service: EventService = inject(EventService);
   events: Event[] = [];
+
   constructor() {}
+
   ngOnInit() {
-    //this.events = this.service.getAll();
     this.loadEvents();
     localStorage.setItem('events', JSON.stringify(this.events));
   }
@@ -28,7 +29,11 @@ export class HomePage {
     try {
       await Share.share({
         title: 'Partage : ' + event.nameEvent,
-        text: 'Venez participer à cet événement le ' + event.dateEvent,
+        text:
+          'Venez participer à cet événement : ' +
+          event.nameEvent +
+          ' le ' +
+          event.dateEvent,
         dialogTitle: "Partage d'événement",
       });
     } catch (error) {

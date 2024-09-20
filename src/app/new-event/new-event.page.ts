@@ -3,11 +3,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { NavController, AlertController } from '@ionic/angular';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-event',
   templateUrl: './new-event.page.html',
   styleUrls: ['./new-event.page.scss'],
+  providers: [DatePipe],
 })
 export class NewEventPage implements OnInit {
   selectedImage: string | undefined = undefined;
@@ -21,12 +23,17 @@ export class NewEventPage implements OnInit {
   private eventService: EventService = inject(EventService);
   constructor(
     private navCtrl: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private datePipe: DatePipe
   ) {
     this.requestNotificationPermission();
   }
 
   ngOnInit() {}
+
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy HH:mm') || '';
+  }
 
   async selectImage() {
     const image = await Camera.getPhoto({
@@ -39,6 +46,7 @@ export class NewEventPage implements OnInit {
     this.selectedImage = image.dataUrl;
   }
 
+  //Permission d'utiliser les notifications
   async requestNotificationPermission() {
     const permission = await LocalNotifications.requestPermissions();
     if (permission.display === 'granted') {
@@ -77,7 +85,6 @@ export class NewEventPage implements OnInit {
 
   async createEvent() {
     if (!this.eventName || !this.eventLocation || !this.eventDateTime) {
-      console.log('Champs manquants');
       this.errorMessage = 'Merci de remplir tous les champs requis';
       this.popAlert();
       return;
@@ -87,13 +94,13 @@ export class NewEventPage implements OnInit {
       id: (this.eventService.getAll().length + 1).toString(),
       nameEvent: this.eventName,
       cityEvent: this.eventLocation,
-      dateEvent: this.eventDateTime,
+      //Formattage de la date
+      dateEvent: this.formatDate(this.eventDateTime),
       descriptionEvent: this.eventDescription,
       urlPhoto: this.selectedImage,
     };
 
     this.eventService.addEvent(newEvent);
-    console.log('Nouvel événement ajouté : ', newEvent);
     this.navCtrl.navigateRoot('/home');
 
     await this.sendNotification(newEvent);
