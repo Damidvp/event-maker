@@ -1,27 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Event Maker</ion-title>
+    <ion-title>Event Maker - Nouvel événement</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-menu contentId="nav-content" side="end">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    <ion-card href="./home"
-      ><ion-card-content>Evénements</ion-card-content></ion-card
-    >
-    <ion-card href="./new-event"
-      ><ion-card-content>Nouvel événement</ion-card-content></ion-card
-    >
-  </ion-content>
-</ion-menu>
+<app-menu></app-menu>
 
 <ion-content id="nav-content" [fullscreen]="true">
   <ion-header collapse="condense">
@@ -29,4 +15,37 @@
       <ion-title size="large">Nouvel événement</ion-title>
     </ion-toolbar>
   </ion-header>
+  <ion-button (click)="selectImage()">Choisir une image</ion-button>
+  <div *ngIf="selectedImage">
+    <img [src]="selectedImage" alt="Image sélectionnée" />
+  </div>
+  <ion-input
+    placeholder="Nom de l'événement"
+    [(ngModel)]="eventName"
+    name="eventName"
+    required
+  ></ion-input>
+  <ion-input
+    placeholder="Lieu de l'événement"
+    [(ngModel)]="eventLocation"
+    name="eventLocation"
+    required
+  ></ion-input>
+  <ion-datetime
+    id="datetime"
+    [(ngModel)]="eventDateTime"
+    name="eventDateTime"
+  ></ion-datetime>
+  <ion-textarea
+    placeholder="Description..."
+    [(ngModel)]="eventDescription"
+    name="eventDescription"
+  ></ion-textarea>
+  <ion-alert
+    *ngIf="errorMessage"
+    header="Erreur"
+    message="{{ errorMessage }}"
+    [buttons]="alertButton"
+  ></ion-alert>
+  <ion-button (click)="createEvent()">Créer</ion-button>
 </ion-content>

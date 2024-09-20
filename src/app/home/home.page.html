@@ -7,21 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-menu contentId="nav-content" side="end">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    <ion-card href="./home"
-      ><ion-card-content>Evénements</ion-card-content></ion-card
-    >
-    <ion-card href="./new-event"
-      ><ion-card-content>Nouvel événement</ion-card-content></ion-card
-    >
-  </ion-content>
-</ion-menu>
+<app-menu></app-menu>
 
 <ion-content id="nav-content" [fullscreen]="true">
   <ion-header collapse="condense">
@@ -34,9 +20,12 @@
       <img alt="Image événement" src="{{evt.urlPhoto}}" />
       <ion-card-header>
         <ion-card-title>{{evt.nameEvent}}</ion-card-title>
-        <ion-card-subtitle>{{evt.cityEvent}}</ion-card-subtitle>
+        <ion-card-subtitle
+          >{{evt.cityEvent}} - {{evt.dateEvent}}</ion-card-subtitle
+        >
       </ion-card-header>
       <ion-card-content>{{evt.descriptionEvent}}</ion-card-content>
+      <ion-button (click)="shareEvent(evt)">Partager</ion-button>
     </ion-card>
   </ng-container>
 </ion-content>

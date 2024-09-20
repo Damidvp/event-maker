@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class EventService {
   private mockEvents: Event[] = [
-    {
+    /*{
       id: '1',
       nameEvent: 'Soirée Cocktail',
       dateEvent: '19/09/2024',
@@ -28,14 +28,20 @@ export class EventService {
       cityEvent: 'Nîmes',
       urlPhoto: 'photo',
       descriptionEvent: 'Une description à écrire...',
-    },
+    },*/
   ];
 
   constructor() {}
 
   getAll() {
-    console.log(this.mockEvents);
     return [...this.mockEvents];
+  }
+
+  addEvent(event: Event) {
+    console.log(event);
+    this.mockEvents = JSON.parse(localStorage.getItem('events') || '[]');
+    this.mockEvents.push(event);
+    localStorage.setItem('events', JSON.stringify(this.mockEvents));
   }
 }
 
@@ -44,6 +50,6 @@ export interface Event {
   nameEvent: string;
   dateEvent: string;
   cityEvent: string;
-  urlPhoto: string;
+  urlPhoto: string | undefined;
   descriptionEvent: string;
 }
